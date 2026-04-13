@@ -1,0 +1,309 @@
+:root {
+    --ink: #0a0806;
+    --rust: #8b3a2a;
+    --rust-bright: #c0503a;
+    --light-dust: #c8bfad;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body {
+    background: #000;
+    color: #fff;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: default;
+  }
+
+  /* ── CANVAS 배경 ── */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  /* ── 노이즈 오버레이 ── */
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    opacity: 0.45;
+  }
+
+  /* ── 하단·상단 그라디언트 페이드 ── */
+  .fade-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55vh;
+    background: linear-gradient(to top, #000d1a 30%, transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .fade-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+    background: linear-gradient(to bottom, rgba(0,8,20,0.7) 0%, transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ── 메인 컨텐츠 ── */
+  .content {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 8vh;
+  }
+
+  .series-label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: rgba(160,210,255,0.45);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .main-title {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: clamp(52px, 9vw, 110px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: #fff;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .main-title .accent {
+    color: var(--rust-bright);
+    display: inline-block;
+  }
+
+  .subtitle {
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-weight: 200;
+    letter-spacing: 0.08em;
+    color: rgba(160,210,255,0.5);
+    margin-top: 14px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .description {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(200,230,255,0.7);
+    max-width: 540px;
+    margin-top: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .description em {
+    font-style: normal;
+    color: var(--rust-bright);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.3s forwards;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(160,210,255,0.35);
+    text-transform: uppercase;
+  }
+
+  .meta-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(100,180,255,0.25);
+  }
+
+  /* ── 에피소드 섹션 ── */
+  .episodes-section {
+    position: relative;
+    z-index: 10;
+    padding: 0 6vw 12vh;
+  }
+
+  .episodes-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: rgba(160,210,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(100,180,255,0.1);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.5s forwards;
+  }
+
+  .episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .ep-card {
+    position: relative;
+    text-decoration: none;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s ease forwards;
+    cursor: pointer;
+  }
+
+  .ep-card:nth-child(1) { animation-delay: 1.6s; }
+  .ep-card:nth-child(2) { animation-delay: 1.75s; }
+  .ep-card:nth-child(3) { animation-delay: 1.9s; }
+  .ep-card:nth-child(4) { animation-delay: 2.05s; }
+
+  .ep-card-inner {
+    position: relative;
+    border: 1px solid rgba(100,180,255,0.1);
+    background: rgba(0,30,60,0.25);
+    padding: 28px 24px 26px;
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+    overflow: hidden;
+  }
+
+  .ep-card:hover .ep-card-inner {
+    background: rgba(0,50,100,0.35);
+    border-color: rgba(80,160,255,0.35);
+    transform: translateY(-4px);
+  }
+
+  .ep-card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(60,140,255,0.8) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .ep-card:hover .ep-card-inner::before {
+    opacity: 1;
+  }
+
+  .ep-num {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--rust-bright);
+    margin-bottom: 12px;
+  }
+
+  .ep-title {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: clamp(16px, 1.6vw, 20px);
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .ep-subtitle {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(160,210,255,0.4);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  .ep-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(200,230,255,0.45);
+    line-height: 1.8;
+  }
+
+  .ep-arrow {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: rgba(160,210,255,0.25);
+    text-transform: uppercase;
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+  }
+
+  .ep-card:hover .ep-arrow {
+    color: rgba(100,180,255,0.9);
+    letter-spacing: 0.3em;
+  }
+
+  /* ── 애니메이션 ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── 저작권 ── */
+  .site-copyright {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 20px 0 36px;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(160,210,255,0.3);
+  }
+
+  .site-copyright a {
+    color: rgba(160,210,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .site-copyright a:hover {
+    color: rgba(160,210,255,0.8);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    .episodes-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .episodes-grid { grid-template-columns: 1fr; }
+    .content { padding: 0 6vw 6vh; }
+  }
