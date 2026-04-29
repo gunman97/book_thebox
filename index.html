@@ -17,7 +17,7 @@
 <meta name="keywords" content="그들의 박스, 드라마 시나리오, 이강준, 수리기사">
 <meta name="author" content="그들의 박스">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#8b3a2a">
+<meta name="theme-color" content="#1c69d4">
 <link rel="canonical" href="index.html">
 
 <!-- ── Open Graph ── -->
@@ -45,318 +45,84 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="thebox" />
 <link rel="manifest" href="site.webmanifest" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="index_style.css">
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-<div class="noise"></div>
-<div class="fade-top"></div>
-<div class="fade-bottom"></div>
-
-<div class="content">
-  <div class="series-label">드라마 시나리오 · 2026</div>
-  <h1 class="main-title">그들의<br><span class="accent">박스</span></h1>
-  <p class="subtitle">The Box &nbsp;·&nbsp; 이강준의 수리일지</p>
-  <p class="description">
-    컴퓨터 수리기사 <em>이강준</em>의 작업대 위로 찾아오는 컴퓨터들.<br>
-    기계를 고치는 일은 단순하다.<br>
-    그러나 열린 박스 안에는<br>
-    꺼내 보일 수 없는 것들이 들어 있다.
-  </p>
-  <div class="meta">
-    <span class="meta-item">드라마</span>
-    <div class="meta-sep"></div>
-    <span class="meta-item">5 에피소드</span>
-    <div class="meta-sep"></div>
-    <span class="meta-item">수리기사의 시선</span>
+<!-- ── Hero Band ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="series-label">드라마 시나리오 · 2026</div>
+    <h1 class="main-title">그들의<br><span class="accent">박스</span></h1>
+    <p class="subtitle">The Box &nbsp;·&nbsp; 이강준의 수리일지</p>
+    <p class="description">
+      컴퓨터 수리기사 <em>이강준</em>의 작업대 위로 찾아오는 컴퓨터들.<br>
+      기계를 고치는 일은 단순하다.<br>
+      그러나 열린 박스 안에는<br>
+      꺼내 보일 수 없는 것들이 들어 있다.
+    </p>
+    <div class="meta">
+      <span class="meta-item">드라마</span>
+      <div class="meta-sep"></div>
+      <span class="meta-item">5 에피소드</span>
+      <div class="meta-sep"></div>
+      <span class="meta-item">수리기사의 시선</span>
+    </div>
   </div>
-</div>
+</header>
 
-<div class="episodes-section">
-  <div class="episodes-label">에피소드</div>
-  <div class="episodes-grid">
+<!-- ── Episodes Section ── -->
+<section class="episodes-section">
+  <div class="episodes-inner">
+    <div class="episodes-label">에피소드</div>
+    <div class="episodes-grid">
 
-    <a class="ep-card" href="EP_01.html" target="_blank">
-      <div class="ep-card-inner">
+      <a class="ep-card" href="EP_01.html" target="_blank">
         <div class="ep-num">EP. 01</div>
         <div class="ep-title">특별히 한 게<br>없는데요</div>
         <div class="ep-subtitle">"특별히 뭘 한 건 없고요"</div>
-        <div class="ep-desc">중년 부부의 컴퓨터. 남편의 체면 그리고 강준의 선택.</div>
+        <p class="ep-desc">중년 부부의 컴퓨터. 남편의 체면 그리고 강준의 선택.</p>
         <span class="ep-arrow">읽기 →</span>
-      </div>
-    </a>
+      </a>
 
-    <a class="ep-card" href="EP_02.html" target="_blank">
-      <div class="ep-card-inner">
+      <a class="ep-card" href="EP_02.html" target="_blank">
         <div class="ep-num">EP. 02</div>
         <div class="ep-title">제가 말씀드린<br>대로</div>
         <div class="ep-subtitle">"제가 개발자라서요"</div>
-        <div class="ep-desc">콧대 높은 개발자, 멈추지 않는 해명과 자랑. 강준은 원인을 찾는 순간 입을 다문다.</div>
+        <p class="ep-desc">콧대 높은 개발자, 멈추지 않는 해명과 자랑. 강준은 원인을 찾는 순간 입을 다문다.</p>
         <span class="ep-arrow">읽기 →</span>
-      </div>
-    </a>
+      </a>
 
-    <a class="ep-card" href="EP_03.html" target="_blank">
-      <div class="ep-card-inner">
+      <a class="ep-card" href="EP_03.html" target="_blank">
         <div class="ep-num">EP. 03</div>
         <div class="ep-title">잘 나온 거죠</div>
         <div class="ep-subtitle">"이 정도면 예쁘게 잘 나온 거죠?"</div>
-        <div class="ep-desc">실수로 지운 사진들. 복구된 가족 앨범.</div>
+        <p class="ep-desc">실수로 지운 사진들. 복구된 가족 앨범.</p>
         <span class="ep-arrow">읽기 →</span>
-      </div>
-    </a>
+      </a>
 
-    <a class="ep-card" href="EP_04.html" target="_blank">
-      <div class="ep-card-inner">
+      <a class="ep-card" href="EP_04.html" target="_blank">
         <div class="ep-num">EP. 04</div>
         <div class="ep-title">편지</div>
         <div class="ep-subtitle">"돈 말고 다른 건 없었나요?"</div>
-        <div class="ep-desc">방문 출장. 다음날 찾아온 남자.</div>
+        <p class="ep-desc">방문 출장. 다음날 찾아온 남자.</p>
         <span class="ep-arrow">읽기 →</span>
-      </div>
-    </a>
+      </a>
 
-    <a class="ep-card" href="EP_05.html" target="_blank">
-      <div class="ep-card-inner">
+      <a class="ep-card" href="EP_05.html" target="_blank">
         <div class="ep-num">EP. 05</div>
         <div class="ep-title">서른 장</div>
         <div class="ep-subtitle">"얼마를 청구해야할까?"</div>
-        <div class="ep-desc">원인을 찾기 위한 가정과 과정.</div>
+        <p class="ep-desc">원인을 찾기 위한 가정과 과정.</p>
         <span class="ep-arrow">읽기 →</span>
-      </div>
-    </a>
+      </a>
 
-
+    </div>
   </div>
-</div>
+</section>
 
 <p class="site-copyright">© 1997-2026 <a href="https://airpage.org" target="_blank">AiRPAGE</a></p>
 
-<script>
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-
-  let W, H, time = 0;
-  let particles = [];
-  let lightRays = [];
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  // ── 물 속 부유 입자 ──
-  class Mote {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.x = Math.random() * W;
-      this.y = init ? Math.random() * H : H + 8;
-      this.size = Math.random() * 1.2 + 0.2;
-      this.vy = -(Math.random() * 0.2 + 0.04);
-      this.vx = (Math.random() - 0.5) * 0.08;
-      this.wobble = Math.random() * Math.PI * 2;
-      this.wobbleSpeed = Math.random() * 0.012 + 0.004;
-      this.opacity = 0;
-      this.maxOpacity = Math.random() * 0.4 + 0.05;
-      this.life = 0;
-      this.maxLife = Math.random() * 700 + 500;
-    }
-    update() {
-      this.wobble += this.wobbleSpeed;
-      this.x += this.vx + Math.sin(this.wobble) * 0.15;
-      this.y += this.vy;
-      this.life++;
-      const p = this.life / this.maxLife;
-      if (p < 0.12) this.opacity = (p / 0.12) * this.maxOpacity;
-      else if (p > 0.78) this.opacity = ((1 - p) / 0.22) * this.maxOpacity;
-      else this.opacity = this.maxOpacity;
-      if (this.life > this.maxLife || this.y < -10) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.fillStyle = `rgba(180,220,255,1)`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  // ── 빛 굴절 반짝임 (코스틱) ──
-  class Caustic {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.x = Math.random() * W;
-      this.y = init ? Math.random() * H * 0.6 : -20;
-      this.r = Math.random() * 60 + 20;
-      this.vx = (Math.random() - 0.5) * 0.3;
-      this.vy = Math.random() * 0.4 + 0.1;
-      this.opacity = 0;
-      this.maxOpacity = Math.random() * 0.07 + 0.02;
-      this.life = 0;
-      this.maxLife = Math.random() * 500 + 300;
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.r += 0.04;
-      this.life++;
-      const p = this.life / this.maxLife;
-      if (p < 0.2) this.opacity = (p / 0.2) * this.maxOpacity;
-      else if (p > 0.65) this.opacity = ((1 - p) / 0.35) * this.maxOpacity;
-      else this.opacity = this.maxOpacity;
-      if (this.life > this.maxLife || this.y > H + 20) this.reset();
-    }
-    draw() {
-      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
-      grd.addColorStop(0,   `rgba(80,180,255,${this.opacity * 1.8})`);
-      grd.addColorStop(0.4, `rgba(40,120,220,${this.opacity})`);
-      grd.addColorStop(1,   'rgba(0,40,100,0)');
-      ctx.save();
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  // ── 빛 기둥 정의 ──
-  function initLightRays() {
-    lightRays = [
-      { baseX: 0.18, spread: 0.22, phase: 0.0,  speed: 0.00028, bright: 0.10 },
-      { baseX: 0.40, spread: 0.30, phase: 1.2,  speed: 0.00022, bright: 0.16 },
-      { baseX: 0.62, spread: 0.18, phase: 2.5,  speed: 0.00035, bright: 0.09 },
-      { baseX: 0.82, spread: 0.24, phase: 0.8,  speed: 0.00020, bright: 0.12 },
-    ];
-  }
-
-  // ── 배경 그라디언트 (깊은 물) ──
-  function drawBackground() {
-    const t = time * 0.00035;
-    const cx = W * (0.5 + Math.sin(t) * 0.06);
-    const cy = H * (0.28 + Math.cos(t * 0.6) * 0.04);
-
-    // 심해 기본색
-    const base = ctx.createRadialGradient(cx, cy, 0, W * 0.5, H * 0.5, Math.max(W, H) * 1.1);
-    base.addColorStop(0,   'rgba(2,20,45,1)');
-    base.addColorStop(0.3, 'rgba(1,12,28,1)');
-    base.addColorStop(0.65,'rgba(0,7,18,1)');
-    base.addColorStop(1,   'rgba(0,3,10,1)');
-    ctx.fillStyle = base;
-    ctx.fillRect(0, 0, W, H);
-
-    // 수면 방향 은은한 청색 광
-    const surfaceGlow = ctx.createLinearGradient(0, 0, 0, H * 0.55);
-    surfaceGlow.addColorStop(0,   'rgba(10,60,140,0.18)');
-    surfaceGlow.addColorStop(0.4, 'rgba(5,30,80,0.06)');
-    surfaceGlow.addColorStop(1,   'rgba(0,0,0,0)');
-    ctx.fillStyle = surfaceGlow;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  // ── 빛 기둥 렌더 ──
-  function drawLightRays() {
-    for (const ray of lightRays) {
-      const t = time * ray.speed + ray.phase;
-      const sway = Math.sin(t) * 0.07;
-      const cx = W * (ray.baseX + sway);
-      const halfTop  = W * 0.012;
-      const halfBot  = W * ray.spread;
-
-      const grd = ctx.createLinearGradient(0, 0, 0, H * 0.85);
-      grd.addColorStop(0,    `rgba(60,160,255,${ray.bright})`);
-      grd.addColorStop(0.35, `rgba(30,100,200,${ray.bright * 0.55})`);
-      grd.addColorStop(0.7,  `rgba(10,50,140,${ray.bright * 0.2})`);
-      grd.addColorStop(1,    'rgba(0,20,60,0)');
-
-      ctx.save();
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.moveTo(cx - halfTop, 0);
-      ctx.lineTo(cx + halfTop, 0);
-      ctx.lineTo(cx + halfBot, H);
-      ctx.lineTo(cx - halfBot, H);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-
-      // 기둥 중심 밝은 선
-      const coreBright = ray.bright * 0.55;
-      const coreGrd = ctx.createLinearGradient(0, 0, 0, H * 0.6);
-      coreGrd.addColorStop(0,   `rgba(140,210,255,${coreBright})`);
-      coreGrd.addColorStop(0.4, `rgba(80,160,255,${coreBright * 0.4})`);
-      coreGrd.addColorStop(1,   'rgba(0,0,0,0)');
-
-      ctx.save();
-      ctx.fillStyle = coreGrd;
-      ctx.beginPath();
-      ctx.moveTo(cx - halfTop * 0.3, 0);
-      ctx.lineTo(cx + halfTop * 0.3, 0);
-      ctx.lineTo(cx + halfBot * 0.18, H * 0.6);
-      ctx.lineTo(cx - halfBot * 0.18, H * 0.6);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  // ── 수면 물결 반사 (최상단) ──
-  function drawSurface() {
-    const t = time * 0.0008;
-    ctx.save();
-    ctx.globalAlpha = 0.12;
-    for (let i = 0; i < 6; i++) {
-      const y = 3 + i * 2.5 + Math.sin(t + i * 0.9) * 1.5;
-      const grd = ctx.createLinearGradient(0, 0, W, 0);
-      grd.addColorStop(0,   'rgba(100,200,255,0)');
-      grd.addColorStop(0.3 + Math.sin(t * 0.7 + i) * 0.15, 'rgba(160,230,255,0.8)');
-      grd.addColorStop(1,   'rgba(100,200,255,0)');
-      ctx.strokeStyle = grd;
-      ctx.lineWidth = 0.6;
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      for (let x = 0; x <= W; x += 6) {
-        ctx.lineTo(x, y + Math.sin(x * 0.018 + t * 2 + i) * 1.2);
-      }
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  // ── 비네트 ──
-  function drawVignette() {
-    const vgrd = ctx.createRadialGradient(W / 2, H / 2, H * 0.05, W / 2, H / 2, Math.max(W, H) * 0.88);
-    vgrd.addColorStop(0, 'rgba(0,0,0,0)');
-    vgrd.addColorStop(1, 'rgba(0,0,0,0.75)');
-    ctx.fillStyle = vgrd;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  function init() {
-    resize();
-    initLightRays();
-    particles = [];
-    for (let i = 0; i < 100; i++) particles.push(new Mote());
-    for (let i = 0; i < 18; i++) particles.push(new Caustic());
-  }
-
-  function animate() {
-    requestAnimationFrame(animate);
-    time++;
-    drawBackground();
-    drawLightRays();
-    drawSurface();
-    for (const p of particles) { p.update(); p.draw(); }
-    drawVignette();
-  }
-
-  window.addEventListener('resize', resize);
-  init();
-  animate();
-</script>
 </body>
 </html>

@@ -1,90 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
 
 :root {
-  --ink: #000000;
-  --paper: #f5f0e8;
-  --aged: #e8dfc8;
-  --light-dust: #c8bfad;
+  --primary:         #1c69d4;
+  --primary-active:  #0653b6;
+  --ink:             #262626;
+  --body:            #3c3c3c;
+  --muted:           #6b6b6b;
+  --muted-soft:      #9a9a9a;
+  --hairline:        #e6e6e6;
+  --hairline-strong: #cccccc;
+  --canvas:          #ffffff;
+  --surface-soft:    #f7f7f7;
+  --surface-card:    #fafafa;
+  --surface-dark:    #1a2129;
+  --surface-dark-el: #262e38;
+  --on-dark:         #ffffff;
+  --on-dark-soft:    #bbbbbb;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background-color: var(--paper);
-  color: var(--ink);
-  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--canvas);
+  color: var(--body);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 300;
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 100;
-}
-
 .page {
   max-width: 740px;
   margin: 0 auto;
-  padding: 80px 40px 120px;
+  padding: 100px 40px 120px;
 }
 
 /* ── Header ── */
 .series-label {
-  font-weight: 400;
   font-size: 13px;
-  letter-spacing: 0.3em;
-  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
+  animation: fadeUp 0.5s ease 0.2s forwards;
 }
 
 .title-block {
-  border-top: 2px solid var(--ink);
-  border-bottom: 1px solid var(--light-dust);
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--hairline);
   padding: 20px 0 18px;
   margin-bottom: 8px;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.4s forwards;
+  animation: fadeUp 0.5s ease 0.4s forwards;
 }
 
 h1 {
-  font-size: clamp(42px, 8vw, 68px);
+  font-size: clamp(40px, 7vw, 64px);
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--ink);
 }
 
 .ep-line {
   display: flex;
   align-items: baseline;
   gap: 16px;
-  margin-top: 10px;
+  margin-top: 12px;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.6s forwards;
+  animation: fadeUp 0.5s ease 0.6s forwards;
 }
 
 .ep-number {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  text-transform: uppercase;
 }
 
 .ep-title {
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--ink);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--body);
 }
 
 /* ── Scene divider ── */
@@ -94,87 +96,98 @@ h1 {
   gap: 12px;
   margin: 52px 0 20px;
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .scene-num {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .scene-line {
   flex: 1;
   height: 1px;
-  background: var(--light-dust);
+  background: var(--hairline);
 }
 
 .scene-loc {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  color: var(--ink);
-  letter-spacing: 0.1em;
+  color: var(--muted);
+  letter-spacing: 0.3px;
   white-space: nowrap;
 }
 
 /* ── Stage direction ── */
 .direction {
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.9;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
   margin: 16px 0;
   padding-left: 20px;
-  border-left: 2px solid var(--aged);
+  border-left: 2px solid var(--hairline-strong);
   font-style: italic;
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 /* ── Narration ── */
 .narration {
-  font-size: 17px;
-  line-height: 2.1;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
   margin: 18px 0;
-  padding: 18px 24px;
-  background: var(--aged);
-  border-radius: 2px;
+  padding: 20px 24px;
+  background: var(--surface-soft);
+  border-left: 3px solid var(--primary);
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .narration em {
   font-style: normal;
-  color: var(--ink);
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
 }
 
 /* ── Dialogue ── */
 .dialogue-block {
   margin: 14px 0;
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .speaker {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  text-transform: uppercase;
   margin-bottom: 4px;
 }
 
 .line {
-  font-size: 18px;
-  line-height: 1.95;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.8;
   padding-left: 16px;
   border-left: 3px solid var(--ink);
+  color: var(--ink);
 }
 
 .line.inner {
-  border-left-color: var(--light-dust);
-  color: var(--ink);
+  border-left-color: var(--hairline-strong);
+  color: var(--muted);
   font-size: 16px;
 }
 
@@ -182,60 +195,47 @@ h1 {
 .thought {
   margin: 24px 0;
   padding: 20px 28px;
-  border: 1px solid var(--light-dust);
-  border-left: 3px solid var(--ink);
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--surface-dark);
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .thought-label {
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  color: var(--ink);
-  margin-bottom: 10px;
-  opacity: 0.6;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .thought p {
-  font-size: 17px;
-  line-height: 2.05;
-  color: var(--ink);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--on-dark-soft);
 }
 
 /* ── Prose paragraph ── */
 p.prose {
-  font-size: 17.5px;
-  line-height: 2.1;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
   margin: 14px 0;
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 /* ── Whiteboard (EP_05) ── */
 .whiteboard {
   margin: 28px 0;
   padding: 24px 28px;
-  background: #f9f8f4;
-  border: 1.5px solid var(--light-dust);
-  border-top: 3px solid #ddd;
+  background: var(--surface-card);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--primary);
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
   position: relative;
-}
-
-.whiteboard::before {
-  content: 'WHITEBOARD';
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  color: var(--light-dust);
-  background: #f9f8f4;
-  padding: 0 6px;
 }
 
 .wb-section {
@@ -243,91 +243,95 @@ p.prose {
 }
 
 .wb-title {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
   margin-bottom: 8px;
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--aged);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .wb-items {
   font-size: 14px;
-  font-weight: 400;
-  color: var(--ink);
+  font-weight: 300;
+  color: var(--body);
   line-height: 2.0;
   padding-left: 4px;
 }
 
 .wb-items .done {
-  color: var(--light-dust);
+  color: var(--muted-soft);
   text-decoration: line-through;
 }
 
 .wb-items .highlight {
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--primary);
 }
 
 /* ── Epiphany moment (EP_05) ── */
 .epiphany {
   margin: 32px 0;
-  padding: 0;
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .epiphany-word {
   display: block;
-  font-size: 15px;
+  font-size: clamp(48px, 8vw, 64px);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  line-height: 1;
+  letter-spacing: 0;
+  color: var(--primary);
+  line-height: 1.05;
   margin-bottom: 6px;
 }
 
 .epiphany-sub {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
-  letter-spacing: 0.25em;
-  color: var(--ink);
-  opacity: 0.5;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
 }
 
 /* ── Question box (EP_05) ── */
 .question-box {
   margin: 32px 0;
   padding: 24px 28px;
-  border: 1px solid var(--ink);
+  border: 2px solid var(--primary);
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .question-box .q-label {
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  text-transform: uppercase;
   margin-bottom: 14px;
-  opacity: 0.5;
 }
 
 .question-box .q-text {
-  font-size: 17px;
-  line-height: 2.0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
   color: var(--ink);
 }
 
 /* ── Flashback / cut divider (EP_04) ── */
 .cut-back {
   font-size: 11px;
-  letter-spacing: 0.4em;
-  color: var(--ink);
-  opacity: 0;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted-soft);
+  text-transform: uppercase;
   text-align: center;
   margin: 44px 0 0;
-  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 /* ── End mark ── */
@@ -335,16 +339,17 @@ p.prose {
   text-align: center;
   margin-top: 80px;
   padding-top: 40px;
-  border-top: 1px solid var(--light-dust);
+  border-top: 1px solid var(--hairline);
   opacity: 0;
-  animation: fadeUp 0.8s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 
 .end-mark span {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.4em;
-  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
 }
 
 /* ── Stagger delays ── */
@@ -401,57 +406,28 @@ p.prose {
 
 /* ── Animation ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 600px) {
-  .page { padding: 48px 24px 80px; }
-}
-
-/* ── 저작권 ── */
-.site-copyright {
-  text-align: center;
-  padding: 28px 0 36px;
-  font-size: 11px;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 300;
-  letter-spacing: 0.12em;
-  color: #aaa;
-}
-
-.site-copyright a {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.site-copyright a:hover {
-  color: #333;
-}
-
-/* ── 목록으로 돌아가기 ── */
+/* ── Navigation buttons ── */
 .back-top,
 .back-bottom {
   position: fixed;
   z-index: 200;
   text-decoration: none;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  color: #666;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 10px 20px;
-  border-radius: 2px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--on-dark);
+  background: var(--primary);
+  padding: 12px 24px;
+  transition: background 0.2s ease;
 }
 
 .back-top {
-  top: 36px;
+  top: 32px;
   left: 40px;
 }
 
@@ -462,13 +438,30 @@ p.prose {
 
 .back-top:hover,
 .back-bottom:hover {
-  color: #000;
-  background: #fff;
-  border-color: rgba(0, 0, 0, 0.28);
-  transform: translateY(-1px);
+  background: var(--primary-active);
+}
+
+/* ── Copyright ── */
+.site-copyright {
+  text-align: center;
+  padding: 28px 0 36px;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted-soft);
+}
+
+.site-copyright a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-copyright a:hover {
+  color: var(--primary);
 }
 
 @media (max-width: 600px) {
+  .page        { padding: 64px 24px 80px; }
   .back-top    { top: 20px; left: 20px; }
   .back-bottom { bottom: 24px; right: 20px; }
 }
