@@ -16,7 +16,12 @@
   var cmtList   = document.getElementById('commentList');
   var cmtTotal  = document.getElementById('commentTotal');
 
-  var LIKE_KEY = 'thebox_liked_ep' + epId;
+  var LIKE_KEY      = 'thebox_liked_ep' + epId;
+  var PAGE_SIZE     = 10;
+  var currentOffset = 0;
+  var totalComments = 0;
+  var hasLoaded     = false;
+  var cmtMoreBtn    = null;
 
   /* ── AJAX helper ─────────────────────────────────────────────── */
   function apiCall(url, options) {
@@ -93,78 +98,135 @@
       + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
   }
 
-  function renderComments(list) {
+  /* Event delegation — edit/delete buttons */
+  if (cmtList) {
+    cmtList.addEventListener('click', function (e) {
+      var btn = e.target;
+      if (!btn || !btn.classList) return;
+
+      var item = btn;
+      while (item && !item.classList.contains('cmt-item')) {
+        item = item.parentNode;
+      }
+      if (!item) return;
+
+      var id = item.getAttribute('data-id');
+
+      if (btn.classList.contains('cmt-btn-edit')) {
+        var contentEl = item.querySelector('.cmt-content');
+        var text = contentEl ? (contentEl.innerText || contentEl.textContent) : '';
+        showModal('댓글 수정', [
+          { key: 'content', label: '내용', tag: 'textarea', value: text, rows: 5 },
+          { key: 'password', label: '비밀번호', tag: 'input', type: 'password' }
+        ], function (vals, close) {
+          if (!vals.content.trim() || !vals.password) { alert('내용과 비밀번호를 입력해주세요.'); return; }
+          apiCall(API_BASE + '?action=edit_comment', {
+            method: 'POST',
+            body: JSON.stringify({ id: id, content: vals.content.trim(), password: vals.password })
+          })
+            .done(function (d) {
+              if (d.error) { alert(d.error); return; }
+              close(); loadComments(true);
+            })
+            .fail(function () { alert('수정에 실패했습니다.'); });
+        });
+
+      } else if (btn.classList.contains('cmt-btn-delete')) {
+        showModal('댓글 삭제', [
+          { key: 'password', label: '비밀번호를 입력하면 댓글이 삭제됩니다', tag: 'input', type: 'password' }
+        ], function (vals, close) {
+          if (!vals.password) { alert('비밀번호를 입력해주세요.'); return; }
+          apiCall(API_BASE + '?action=delete_comment', {
+            method: 'POST',
+            body: JSON.stringify({ id: id, password: vals.password })
+          })
+            .done(function (d) {
+              if (d.error) { alert(d.error); return; }
+              close(); loadComments(true);
+            })
+            .fail(function () { alert('삭제에 실패했습니다.'); });
+        });
+      }
+    });
+  }
+
+  function updateMoreBtn() {
+    if (cmtMoreBtn && cmtMoreBtn.parentNode) {
+      cmtMoreBtn.parentNode.removeChild(cmtMoreBtn);
+      cmtMoreBtn = null;
+    }
+    if (currentOffset < totalComments) {
+      var remaining = totalComments - currentOffset;
+      cmtMoreBtn = document.createElement('button');
+      cmtMoreBtn.className = 'cmt-more-btn';
+      cmtMoreBtn.type = 'button';
+      cmtMoreBtn.textContent = '더 보기 (' + remaining + '개)';
+      cmtMoreBtn.addEventListener('click', function () { loadComments(false); });
+      cmtList.parentNode.insertBefore(cmtMoreBtn, cmtList.nextSibling);
+    }
+  }
+
+  function renderComments(list, append) {
     if (!cmtList) return;
+
+    if (!append) {
+      cmtList.innerHTML = '';
+    }
+
     if (!list || list.length === 0) {
-      cmtList.innerHTML = '<p class="cmt-empty">아직 댓글이 없습니다. 첫 번째 댓글을 남겨보세요.</p>';
+      if (!append && cmtList.children.length === 0) {
+        cmtList.innerHTML = '<p class="cmt-empty">아직 댓글이 없습니다. 첫 번째 댓글을 남겨보세요.</p>';
+      }
+      updateMoreBtn();
       return;
     }
-    var html = '';
+
+    var empty = cmtList.querySelector('.cmt-empty');
+    if (empty) cmtList.removeChild(empty);
+
     for (var i = 0; i < list.length; i++) {
       var c = list[i];
       var edited = c.updated_at ? ' <span class="cmt-edited">(수정됨)</span>' : '';
-      html += '<div class="cmt-item" data-id="' + esc(c.id) + '">'
-        + '<div class="cmt-header">'
+      var div = document.createElement('div');
+      div.className = 'cmt-item';
+      div.setAttribute('data-id', String(c.id));
+      div.innerHTML = '<div class="cmt-header">'
         + '<span class="cmt-nick">' + esc(c.nickname) + '</span>'
         + '<span class="cmt-date">' + fmtDate(c.created_at) + edited + '</span>'
         + '<div class="cmt-actions">'
         + '<button class="cmt-btn cmt-btn-edit" type="button">수정</button>'
         + '<button class="cmt-btn cmt-btn-delete" type="button">삭제</button>'
         + '</div></div>'
-        + '<div class="cmt-content">' + esc(c.content).replace(/\n/g, '<br>') + '</div>'
-        + '</div>';
+        + '<div class="cmt-content">' + esc(c.content).replace(/\n/g, '<br>') + '</div>';
+      cmtList.appendChild(div);
     }
-    cmtList.innerHTML = html;
 
-    var items = cmtList.querySelectorAll('.cmt-item');
-    for (var j = 0; j < items.length; j++) {
-      (function (item) {
-        var id = item.getAttribute('data-id');
-        item.querySelector('.cmt-btn-edit').addEventListener('click', function () {
-          var text = item.querySelector('.cmt-content').innerText || item.querySelector('.cmt-content').textContent;
-          showModal('댓글 수정', [
-            { key: 'content', label: '내용', tag: 'textarea', value: text, rows: 5 },
-            { key: 'password', label: '비밀번호', tag: 'input', type: 'password' }
-          ], function (vals, close) {
-            if (!vals.content.trim() || !vals.password) { alert('내용과 비밀번호를 입력해주세요.'); return; }
-            apiCall(API_BASE + '?action=edit_comment', {
-              method: 'POST',
-              body: JSON.stringify({ id: id, content: vals.content.trim(), password: vals.password })
-            })
-              .done(function (d) {
-                if (d.error) { alert(d.error); return; }
-                close(); loadComments();
-              })
-              .fail(function () { alert('수정에 실패했습니다.'); });
-          });
-        });
-
-        item.querySelector('.cmt-btn-delete').addEventListener('click', function () {
-          showModal('댓글 삭제', [
-            { key: 'password', label: '비밀번호를 입력하면 댓글이 삭제됩니다', tag: 'input', type: 'password' }
-          ], function (vals, close) {
-            if (!vals.password) { alert('비밀번호를 입력해주세요.'); return; }
-            apiCall(API_BASE + '?action=delete_comment', {
-              method: 'POST',
-              body: JSON.stringify({ id: id, password: vals.password })
-            })
-              .done(function (d) {
-                if (d.error) { alert(d.error); return; }
-                close(); loadComments();
-              })
-              .fail(function () { alert('삭제에 실패했습니다.'); });
-          });
-        });
-      })(items[j]);
-    }
+    updateMoreBtn();
   }
 
-  function loadComments() {
-    apiCall(API_BASE + '?action=get_comments&ep=' + epId)
+  function loadComments(reset) {
+    if (reset) {
+      currentOffset = 0;
+      totalComments = 0;
+      hasLoaded = false;
+      if (cmtMoreBtn && cmtMoreBtn.parentNode) {
+        cmtMoreBtn.parentNode.removeChild(cmtMoreBtn);
+        cmtMoreBtn = null;
+      }
+    }
+
+    apiCall(API_BASE + '?action=get_comments&ep=' + epId + '&offset=' + currentOffset)
       .done(function (d) {
         var list = d.comments || [];
-        if (cmtTotal) cmtTotal.textContent = list.length > 0 ? list.length + '개' : '';
-        renderComments(list);
+        totalComments = d.total || 0;
+        currentOffset += list.length;
+
+        if (cmtTotal) {
+          cmtTotal.textContent = totalComments > 0 ? totalComments + '개' : '';
+        }
+
+        renderComments(list, hasLoaded);
+        hasLoaded = true;
       })
       .fail(function () {
         if (cmtList) cmtList.innerHTML = '<p class="cmt-error">댓글을 불러오지 못했습니다.</p>';
@@ -192,7 +254,7 @@
           document.getElementById('cmtNick').value = '';
           document.getElementById('cmtPw').value = '';
           document.getElementById('cmtContent').value = '';
-          loadComments();
+          loadComments(true);
         })
         .fail(function () { alert('댓글 등록에 실패했습니다. 다시 시도해주세요.'); })
         .always(function () { btn.disabled = false; btn.textContent = '등록'; });
@@ -263,5 +325,5 @@
 
   /* ── Init ────────────────────────────────────────────────────── */
   loadLikes();
-  loadComments();
+  loadComments(true);
 }(window.jQuery));

@@ -658,6 +658,23 @@ p.prose {
 .comment-submit:hover   { background: var(--primary); }
 .comment-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
+.cmt-more-btn {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 0;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.cmt-more-btn:hover { border-color: var(--primary); color: var(--primary); }
+
 /* Comment list */
 .comment-list {
   display: flex;
