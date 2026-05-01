@@ -1,7 +1,7 @@
-(function () {
+(function ($) {
   'use strict';
 
-  if (typeof fetch === 'undefined') return;
+  if (!$) return;
 
   var API_BASE = 'https://airpage.org/thebox/api.php';
 
@@ -18,12 +18,20 @@
 
   var LIKE_KEY = 'thebox_liked_ep' + epId;
 
-  /* ── Fetch helper ────────────────────────────────────────────── */
-  function apiFetch(url, options) {
+  /* ── AJAX helper ─────────────────────────────────────────────── */
+  function apiCall(url, options) {
     var opts = options || {};
-    opts.headers = opts.headers || {};
-    opts.headers['X-Requested-With'] = 'XMLHttpRequest';
-    return fetch(url, opts).then(function (r) { return r.json(); });
+    var settings = {
+      url: url,
+      type: opts.method || 'GET',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      dataType: 'json'
+    };
+    if (opts.body) {
+      settings.contentType = 'application/json; charset=utf-8';
+      settings.data = opts.body;
+    }
+    return $.ajax(settings);
   }
 
   /* ── Likes ───────────────────────────────────────────────────── */
@@ -37,13 +45,13 @@
   }
 
   function loadLikes() {
-    apiFetch(API_BASE + '?action=get_likes&ep=' + epId)
-      .then(function (d) {
+    apiCall(API_BASE + '?action=get_likes&ep=' + epId)
+      .done(function (d) {
         var liked = d.liked;
         localStorage.setItem(LIKE_KEY, liked ? '1' : '0');
         setLikeUI(d.count || 0, liked);
       })
-      .catch(function () {
+      .fail(function () {
         if (likeCount) likeCount.textContent = '?';
       });
   }
@@ -55,16 +63,15 @@
       var next = wasLiked ? Math.max(0, prev - 1) : prev + 1;
       setLikeUI(next, !wasLiked);
 
-      apiFetch(API_BASE + '?action=toggle_like', {
+      apiCall(API_BASE + '?action=toggle_like', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ep: epId })
       })
-        .then(function (d) {
+        .done(function (d) {
           localStorage.setItem(LIKE_KEY, d.liked ? '1' : '0');
           setLikeUI(d.count || 0, d.liked);
         })
-        .catch(function () {
+        .fail(function () {
           setLikeUI(prev, wasLiked);
         });
     });
@@ -120,14 +127,15 @@
             { key: 'password', label: '비밀번호', tag: 'input', type: 'password' }
           ], function (vals, close) {
             if (!vals.content.trim() || !vals.password) { alert('내용과 비밀번호를 입력해주세요.'); return; }
-            apiFetch(API_BASE + '?action=edit_comment', {
+            apiCall(API_BASE + '?action=edit_comment', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id: id, content: vals.content.trim(), password: vals.password })
-            }).then(function (d) {
-              if (d.error) { alert(d.error); return; }
-              close(); loadComments();
-            }).catch(function () { alert('수정에 실패했습니다.'); });
+            })
+              .done(function (d) {
+                if (d.error) { alert(d.error); return; }
+                close(); loadComments();
+              })
+              .fail(function () { alert('수정에 실패했습니다.'); });
           });
         });
 
@@ -136,14 +144,15 @@
             { key: 'password', label: '비밀번호를 입력하면 댓글이 삭제됩니다', tag: 'input', type: 'password' }
           ], function (vals, close) {
             if (!vals.password) { alert('비밀번호를 입력해주세요.'); return; }
-            apiFetch(API_BASE + '?action=delete_comment', {
+            apiCall(API_BASE + '?action=delete_comment', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id: id, password: vals.password })
-            }).then(function (d) {
-              if (d.error) { alert(d.error); return; }
-              close(); loadComments();
-            }).catch(function () { alert('삭제에 실패했습니다.'); });
+            })
+              .done(function (d) {
+                if (d.error) { alert(d.error); return; }
+                close(); loadComments();
+              })
+              .fail(function () { alert('삭제에 실패했습니다.'); });
           });
         });
       })(items[j]);
@@ -151,13 +160,13 @@
   }
 
   function loadComments() {
-    apiFetch(API_BASE + '?action=get_comments&ep=' + epId)
-      .then(function (d) {
+    apiCall(API_BASE + '?action=get_comments&ep=' + epId)
+      .done(function (d) {
         var list = d.comments || [];
         if (cmtTotal) cmtTotal.textContent = list.length > 0 ? list.length + '개' : '';
         renderComments(list);
       })
-      .catch(function () {
+      .fail(function () {
         if (cmtList) cmtList.innerHTML = '<p class="cmt-error">댓글을 불러오지 못했습니다.</p>';
       });
   }
@@ -174,20 +183,19 @@
       btn.disabled = true;
       btn.textContent = '등록 중…';
 
-      apiFetch(API_BASE + '?action=add_comment', {
+      apiCall(API_BASE + '?action=add_comment', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ep: epId, nickname: nick, password: pw, content: content })
       })
-        .then(function (d) {
+        .done(function (d) {
           if (d.error) { alert(d.error); return; }
           document.getElementById('cmtNick').value = '';
           document.getElementById('cmtPw').value = '';
           document.getElementById('cmtContent').value = '';
           loadComments();
         })
-        .catch(function () { alert('댓글 등록에 실패했습니다. 다시 시도해주세요.'); })
-        .then(function () { btn.disabled = false; btn.textContent = '등록'; });
+        .fail(function () { alert('댓글 등록에 실패했습니다. 다시 시도해주세요.'); })
+        .always(function () { btn.disabled = false; btn.textContent = '등록'; });
     });
   }
 
@@ -256,4 +264,4 @@
   /* ── Init ────────────────────────────────────────────────────── */
   loadLikes();
   loadComments();
-})();
+}(window.jQuery));
