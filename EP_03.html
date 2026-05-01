@@ -359,7 +359,36 @@
     <span>— EP. 03 끝 —</span>
   </div>
 
+  <!-- ── 좋아요 · 댓글 ── -->
+  <div class="interact-section" data-ep="03">
+    <div class="like-row">
+      <button class="like-btn" id="likeBtn" type="button" aria-label="좋아요">
+        <span class="like-heart">♡</span>
+        <span class="like-count">—</span>
+      </button>
+    </div>
+    <section class="comment-area" aria-label="댓글">
+      <div class="comment-heading">
+        <span class="comment-label">댓글</span>
+        <span class="comment-total" id="commentTotal"></span>
+      </div>
+      <form class="comment-form" id="commentForm" novalidate>
+        <div class="comment-meta">
+          <input class="ci-field" type="text" id="cmtNick" placeholder="닉네임" maxlength="20" autocomplete="off">
+          <input class="ci-field" type="password" id="cmtPw" placeholder="비밀번호" maxlength="30" autocomplete="new-password">
+        </div>
+        <textarea class="ci-text" id="cmtContent" placeholder="이 에피소드에 대한 생각을 남겨주세요…" rows="3" maxlength="500"></textarea>
+        <div class="comment-form-footer">
+          <span class="ci-hint">비밀번호는 댓글 수정·삭제 시 사용됩니다</span>
+          <button class="comment-submit" type="submit">등록</button>
+        </div>
+      </form>
+      <div class="comment-list" id="commentList"></div>
+    </section>
+  </div>
+
 </div>
+<script src="thebox.js"></script>
 <a class="back-bottom" href="index.html">목록으로 →</a>
 <p class="site-copyright">© 1997-2026 <a href="https://airpage.org" target="_blank">AiRPAGE</a></p>
 </body>
